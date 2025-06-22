@@ -17,14 +17,16 @@ pipeline{
         stage('Setting up our Virtual Environment and Installing dependancies'){
             steps{
                 script{
-                    echo 'Setting up our Virtual Environment and Installing dependancies............'
-                    sh '''
-                    python -m venv ${VENV_DIR}
-                    . ${VENV_DIR}/bin/activate
-                    pip install --upgrade pip
-                    pip install -e .
-                    '''
-                }
+                echo 'Setting up our Virtual Environment and Installing dependancies............'
+                sh '''
+              python -m venv ${VENV_DIR}
+              . ${VENV_DIR}/bin/activate
+              apt-get update && apt-get install -y ca-certificates  # For Debian/Ubuntu
+              # OR for Alpine: apk add --no-cache ca-certificates
+              pip install --upgrade pip
+              pip install -e .
+              '''
+               }
             }
         }     
     }
